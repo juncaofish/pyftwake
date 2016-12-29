@@ -6,14 +6,14 @@ import traceback
 
 base_module = Extension(name='ftmsc.core',
                     sources = ['ftmsc/core_ivw.c'],
-                    include_dirs = ['.', './include'],
+                    include_dirs = ['.', 'ftmsc/include'],
                     library_dirs = ['/usr/local/lib'],
                     libraries = ['msc','dl','pthread'])
 
 class my_build_ext(build_ext.build_ext):
     def initialize_options(self):
         build_ext.build_ext.initialize_options(self)
-        
+
     def build_extension(self, ext):
         result = build_ext.build_ext.build_extension(self, ext)
         # hack: create a symlink from build/../core.so to gevent/core.so
@@ -45,9 +45,9 @@ class my_build_ext(build_ext.build_ext):
 
 setup (name = 'ftmsc',
        version = '0.1',
-       description = 'this is a package for wrap flytek msc sdk',
+       description = 'this is a package for wrap flytek wake sdk',
        packages = ['ftmsc'],
        ext_modules = [base_module],
        cmdclass = {'build_ext': my_build_ext},
-       author = 'Arthur',
-       author_email = 'largetalk@gmail.com')
+       author = 'juncaofish',
+       author_email = 'juncaofish@sina.com')
