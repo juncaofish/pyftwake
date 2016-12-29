@@ -64,30 +64,27 @@ class QIVWSession(object):
             return
         sessid, err = core.qivwSessionBegin(self.grammarList, self.params)
         if err != 0:
-            raise QIVWSessionParamException('qisr session begin error, error no is %s'%err)
+            raise QIVWSessionParamException('wakeup session begin error, error no is %s'%err)
 
         self.sessid = sessid
-        print 'qisr session begin success'
+        print 'wakeup session begin success'
 
     def register(self):
         core.qivwRegisterNotify(self.sessid)
 
     def detect(self, data):
         status = ''
-        if len(data) == 6400 :
-            audio_stat = 2
-            if len(data) < 6400:
-                audio_stat = 4
-            err = core.qivwAudioWrite(self.sessid, data, audio_stat)
-            status = core.qivwGetMsg()
-            if err != 0:
-                raise QIVWSessionParamException('qisr upload audio error, error no is %s'%err)
+        audio_stat = 2
+        err = core.qivwAudioWrite(self.sessid, data, audio_stat)
+        status = core.qivwGetMsg()
+        if err != 0:
+            raise QIVWSessionParamException('wakeup detect, error no is %s'%err)
         return status
 
     def uploadAudio(self, fileObj):
         if not hasattr(fileObj, 'read'):
             raise QIVWSessionParamException("uploadAudio function except file like object")
-        data = fileObj.read(6400) 
+        data = fileObj.read(6400)
         core.qivwRegisterNotify(self.sessid)
         while len(data) == 6400 :
             audio_stat = 2
