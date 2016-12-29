@@ -7,7 +7,7 @@ import traceback
 base_module = Extension(name='ftmsc.core',
                     sources = ['ftmsc/core_ivw.c'],
                     include_dirs = ['.', 'ftmsc/include'],
-                    library_dirs = ['/usr/local/lib'],
+                    library_dirs = ['lib'],
                     libraries = ['msc','dl','pthread'])
 
 class my_build_ext(build_ext.build_ext):
