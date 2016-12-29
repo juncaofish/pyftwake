@@ -72,9 +72,12 @@ class QIVWSession(object):
     def register(self):
         core.qivwRegisterNotify(self.sessid)
 
+    def clearMsg(self):
+        core.qivwClearMsg()
+
     def detect(self, data):
         status = ''
-        audio_stat = 2
+        audio_stat = 2 if len(data) > 4096 else 4
         err = core.qivwAudioWrite(self.sessid, data, audio_stat)
         status = core.qivwGetMsg()
         if err != 0:

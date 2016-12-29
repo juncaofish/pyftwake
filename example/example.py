@@ -16,8 +16,12 @@ def test1():
             data = fp.read(6400)
             time.sleep(0.2)
             status = sess.detect(data)
+            print status
             if status:
                 print json.loads(status)
+            sess.clearMsg()
+            status = ''
+            
     del sess
 
 if __name__ == '__main__':

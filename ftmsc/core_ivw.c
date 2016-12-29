@@ -31,6 +31,13 @@ static PyObject* pyQIVWGetMsg(PyObject *self, PyObject *args)
     return Py_BuildValue("s", ivw_msg);
 }
 
+static PyObject* pyQIVWClearMsg(PyObject *self, PyObject *args)
+{
+    int ret = 0;
+    memset(ivw_msg,0,100);
+    return Py_BuildValue("i", ret);
+}
+
 int pyQIVWMsgProc( const char *sessionID, int msg, int param1, int param2, const void *info,void *userData )
 {
     if (MSP_IVW_MSG_ERROR == msg) //唤醒出错消息
@@ -118,6 +125,7 @@ static PyMethodDef FtmscMethods[] = {
     {"qivwRegisterNotify", pyQIVWRegisterNotify, METH_VARARGS, "exec QIVWRegisterNotify"},  
     {"qivwSessionBegin", pyQIVWSessionBegin, METH_VARARGS, "exec QIVWSessionBegin"},
     {"qivwGetMsg", pyQIVWGetMsg, METH_VARARGS, "exec QIVWGetMsg"},
+    {"qivwClearMsg", pyQIVWClearMsg, METH_VARARGS, "exec QIVWClearMsg"},
     {"qivwAudioWrite", pyQIVWAudioWrite, METH_VARARGS, "exec AudioWrite"},
     {"qivwSessionEnd", pyQIVWSessionEnd, METH_VARARGS, "exec SessionEnd"},
     {NULL, NULL, 0, NULL}  
